@@ -60,7 +60,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`flex z-[456789875456] justify-between items-center md:pb-[25px] md:pt-[63px] py-8 px-12 md:px-[128px]`}
+        className={`flex z-[456789875456] w-screen justify-between items-center md:pb-[25px] md:pt-[63px] py-8 px-12 md:px-[128px]`}
       >
         <div>
           <button onClick={() => history.push("/")}>
@@ -82,7 +82,24 @@ const Navbar = () => {
                 ))}
               </div>
               <div>
-                <Button className="px-14">Register</Button>
+                <div
+                  className={`w-full p-[2px] rounded bg-transparent duration-300 transition-all bg-gradient-to-b ${
+                    location.pathname === "/register"
+                      ? "from-secondary to-accent"
+                      : ""
+                  }`}
+                >
+                  <Button
+                    onClick={() => history.push("/register")}
+                    className={`px-14 ${
+                      location.pathname === "/register"
+                        ? "!bg-transparent !from-bg !to-bg"
+                        : ""
+                    }`}
+                  >
+                    Register
+                  </Button>
+                </div>
               </div>
             </div>
           ) : (
@@ -103,12 +120,32 @@ const Navbar = () => {
         } transition-all duration-300 transform flex flex-col gap-y-5 px-[47px] z-[98765456777]`}
       >
         {links.map((l) => (
-          <NButton onClick={l.onClick} key={l.title} className="text-left">
+          <NButton
+            onClick={l.onClick}
+            active={l?.active}
+            key={l.title}
+            className="text-left"
+          >
             {l.title}
           </NButton>
         ))}
         <div className="max-w-[172px]">
-          <Button className="px-14">Register</Button>
+          <div
+            className={`w-full p-[2px] rounded bg-transparent duration-300 transition-all bg-gradient-to-b ${
+              location.pathname === "/register"
+                ? "from-secondary to-accent"
+                : ""
+            }`}
+          >
+            <Button
+              onClick={() => history.push("/register")}
+              className={`px-14 ${
+                location.pathname === "/register" ? "bg-transparent" : ""
+              }`}
+            >
+              Register
+            </Button>
+          </div>
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import NotFound from "./components/404";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Contact from "./pages/contact";
 import Landing from "./pages/landing";
+import Register from "./pages/register";
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/contact",
     exact: true,
     component: Contact,
+  },
+  {
+    path: "/register",
+    exact: true,
+    component: Register,
   },
 ];
 
