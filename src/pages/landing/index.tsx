@@ -5,6 +5,8 @@ import Rules from "./rules";
 import Criteria from "./criteria";
 import Faqs from "./faqs";
 import Timeline from "./timeline";
+import Prizes from "./prizes";
+import Partners from "./partners";
 
 const Landing = () => {
   return (
@@ -15,6 +17,8 @@ const Landing = () => {
       <Criteria />
       <Faqs />
       <Timeline />
+      <Prizes />
+      <Partners />
     </Layout>
   );
 };

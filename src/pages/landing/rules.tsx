@@ -7,16 +7,16 @@ import Sparkle from "react-sparkle";
 const Rules = () => {
   return (
     <>
-      <div className="relative flex w-screen flex-col-reverse md:px-0 px-10 justify-between md:flex-row bg-primary z-[87484080]">
+      <div className="relative flex w-screen flex-col-reverse md:px-0 px-10 justify-between md:flex-row bg-bg z-[87484080]">
         <img
           src={lensflare}
           alt="lens flare"
-          className="absolute md:-mt-[250px] top-0 left-0 md:left-auto md:ml-0 -ml-10 -mt-16 opacity-60 blur-lg"
+          className="absolute md:-mt-[250px] top-0 left-0 md:left-auto md:ml-0 -ml-10 -mt-16 opacity-50 blur-lg"
         />
         <img
           src={rulesflare}
           alt="lens flare 2"
-          className="absolute right-0 md:scale-100 scale-50 md:mr-0 -mr-24 top-0 md:mt-0 mt-1 blur-lg"
+          className="absolute right-0 md:scale-100 scale-50 opacity-50 md:mr-0 -mr-24 top-0 md:mt-0 mt-1 blur-lg"
         />
         <div className="absolute md:left-[52%] left-[52px] bottom-[78%] md:w-auto w-[10px] md:bottom-[20%] md:mx-auto flex justify-center">
           <div className="relative">

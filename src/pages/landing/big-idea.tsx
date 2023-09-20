@@ -14,7 +14,7 @@ const BigIdea = () => {
     <>
       <div className="border-t-[1px] opacity-[0.18]"></div>
       <div
-        className={`flex relative md:flex-row flex-col md:gap-y-0 gap-y-14 md:gap-x-[109px] bg-primary py-16 md:pl-[190px] md:pr-40 px-[70px] items-center`}
+        className={`flex relative md:flex-row flex-col md:gap-y-0 gap-y-14 md:gap-x-[109px] bg-bg py-16 md:pl-[190px] md:pr-40 px-[70px] items-center`}
       >
         <div className="flex flex-1 items-start">
           <div className="-mr-2 md:mr-8 relative">

@@ -25,7 +25,7 @@ const Banner = () => {
       <img
         src={lensflare}
         alt="lensflare"
-        className="absolute top-0 left-0 opacity-60 md:-mt-[300px] -ml-20 blur-lg"
+        className="absolute top-0 left-0 md:-mt-[300px] opacity-50 -ml-20 blur-lg"
       />
       <div
         className="relative overflow-hidden"

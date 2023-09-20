@@ -16,7 +16,7 @@ const routes = [
 const LoadingBox = () => {
   return (
     <div className="dark:bg-black h-screen fixed top-0 left-0 w-full">
-      <div className="fixed top-0 left-0 w-full h-screen bg-primary flex justify-center items-center flex-col">
+      <div className="fixed top-0 left-0 w-full h-screen bg-bg flex justify-center items-center flex-col">
         <AiOutlineLoading3Quarters size={48} color="#FFF" />
       </div>
     </div>
@@ -25,7 +25,7 @@ const LoadingBox = () => {
 
 function App() {
   return (
-    <div className="bg-primary">
+    <div className="bg-bg">
       <ErrorBoundary>
         <Suspense fallback={<LoadingBox />}>
           <Switch>

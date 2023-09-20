@@ -8,6 +8,7 @@ module.exports = {
         secondary: "#903AFF",
         accent: "#D434FE",
         extra: "#FE34B9",
+        bg: "#140D27",
       },
       fontFamily: {
         unica: "Unica One",

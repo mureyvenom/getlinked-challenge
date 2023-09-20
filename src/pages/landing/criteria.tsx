@@ -36,60 +36,62 @@ const Criteria = () => {
 
   return (
     <>
-      <div className="flex relative md:flex-row flex-col md:px-0 px-10 bg-primary md:gap-x-16 md:mb-20 mb-10">
-        <img
-          src={flare1}
-          alt="flare 1"
-          className="absolute md:-ml-10 blur-lg -ml-[24%] mt-20"
-        />
-        <img
-          src={flare2}
-          alt="flare 2"
-          className="absolute right-0 bottom-0 md:-mr-[10%] md:-mb-[40%] -mb-[34%] -mr-[29%] blur-lg"
-        />
-        <div className="md:pt-16 pt-5 md:pl-16 relative z-[4567897654]">
-          <div className="flex">
-            <div className="relative md:ml-40 ml-32 md:mb-14 mb-10">
+      <div className="w-screen">
+        <div className="flex relative md:flex-row w-screen flex-col md:px-0 px-10 bg-primary md:gap-x-16 md:mb-20 mb-10">
+          <img
+            src={flare1}
+            alt="flare 1"
+            className="absolute md:-ml-10 blur-lg -ml-[24%] mt-20 opacity-50"
+          />
+          <img
+            src={flare2}
+            alt="flare 2"
+            className="absolute right-0 bottom-0 md:-mr-[10%] md:-mb-[40%] opacity-50 -mb-[34%] -mr-[29%] blur-lg"
+          />
+          <div className="md:pt-16 pt-5 md:pl-16 relative z-[4567897654]">
+            <div className="flex">
+              <div className="relative md:ml-40 ml-32 md:mb-14 mb-10">
+                <img
+                  src={gradientstar}
+                  alt="Gradient star"
+                  className="md:w-[30px] w-[13px]"
+                />
+                <Sparkle overflowPx={0} count={7} maxSize={3} flicker={false} />
+              </div>
+            </div>
+            <img
+              src={isMobileScreen ? mobilecriteria : criteria}
+              alt="Criteria"
+            />
+            <div className="absolute bottom-0 right-0 md:mr-0 mr-[40%] md:mb-0 mb-[34%]">
               <img
-                src={gradientstar}
-                alt="Gradient star"
-                className="md:w-[30px] w-[13px]"
+                src={star}
+                alt="star"
+                className="md:w-auto w-[12px] md:opacity-100 opacity-40"
               />
               <Sparkle overflowPx={0} count={7} maxSize={3} flicker={false} />
             </div>
           </div>
-          <img
-            src={isMobileScreen ? mobilecriteria : criteria}
-            alt="Criteria"
-          />
-          <div className="absolute bottom-0 right-0 md:mr-0 mr-[40%] md:mb-0 mb-[34%]">
-            <img
-              src={star}
-              alt="star"
-              className="md:w-auto w-[12px] md:opacity-100 opacity-40"
-            />
-            <Sparkle overflowPx={0} count={7} maxSize={3} flicker={false} />
-          </div>
-        </div>
-        <div className="md:pt-20 md:pr-20 z-[4567897654]">
-          <div className="font-clash md:text-[32px] md:leading-9 leading-6 text-xl md:text-left text-center font-bold md:max-w-[275px] max-w-[170px] md:mx-0 mx-auto mb-5 z-[894898]">
-            Judging Criteria <br />{" "}
-            <span className="text-accent">Key attributes</span>
-          </div>
-          <div>
-            {criterias.map((c) => (
-              <div
-                key={c.title}
-                className="md:text-sm text-xs md:max-w-[568px] leading-5 mb-5 md:text-left text-center"
-              >
-                <span className="text-accent md:text-base text-[13px] font-bold">
-                  {c.title}:
-                </span>{" "}
-                {c.summary}
+          <div className="md:pt-20 md:pr-20 z-[4567897654]">
+            <div className="font-clash md:text-[32px] md:leading-9 leading-6 text-xl md:text-left text-center font-bold md:max-w-[275px] max-w-[170px] md:mx-0 mx-auto mb-5 z-[894898]">
+              Judging Criteria <br />{" "}
+              <span className="text-accent">Key attributes</span>
+            </div>
+            <div>
+              {criterias.map((c) => (
+                <div
+                  key={c.title}
+                  className="md:text-sm text-xs md:max-w-[568px] leading-5 mb-5 md:text-left text-center"
+                >
+                  <span className="text-accent md:text-base text-[13px] font-bold">
+                    {c.title}:
+                  </span>{" "}
+                  {c.summary}
+                </div>
+              ))}
+              <div className="max-w-[172px] mt-20 md:mx-0 mx-auto">
+                <Button>Read More</Button>
               </div>
-            ))}
-            <div className="max-w-[172px] mt-20 md:mx-0 mx-auto">
-              <Button>Read More</Button>
             </div>
           </div>
         </div>
