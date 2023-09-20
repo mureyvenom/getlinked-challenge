@@ -9,8 +9,11 @@ import location from "../../assets/images/location.svg";
 import star from "../../assets/images/star.svg";
 import gradientstar from "../../assets/images/gradient-star.svg";
 import Sparkle from "react-sparkle";
+import { useHistory } from "react-router";
 
 const Footer = () => {
+  const history = useHistory();
+
   return (
     <div className="bg-[#100B20]">
       <div className="grid relative md:grid-cols-[1fr_0.5fr_0.5fr] md:pt-[70px] md:px-0 px-16 pt-[51px] md:pl-[235px] md:mb-14">
@@ -54,10 +57,30 @@ const Footer = () => {
           </div>
           <p className="text-sm font-semibold text-accent mb-2">Useful Links</p>
           <div className="flex flex-col items-start md:mb-0 mb-3">
-            <button className="text-xs mb-3">Overview</button>
-            <button className="text-xs mb-3">Timeline</button>
-            <button className="text-xs mb-3">FAQs</button>
-            <button className="text-xs mb-3">Register</button>
+            <button
+              onClick={() => history.push("/overview")}
+              className="text-xs mb-3"
+            >
+              Overview
+            </button>
+            <button
+              onClick={() => history.push("/timeline")}
+              className="text-xs mb-3"
+            >
+              Timeline
+            </button>
+            <button
+              onClick={() => history.push("/faqs")}
+              className="text-xs mb-3"
+            >
+              FAQs
+            </button>
+            <button
+              onClick={() => history.push("/register")}
+              className="text-xs mb-3"
+            >
+              Register
+            </button>
           </div>
           <div className="flex gap-x-4 items-center">
             <div className="text-xs text-accent">Follow Us</div>

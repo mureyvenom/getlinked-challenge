@@ -14,6 +14,7 @@ import type { Container, Engine } from "tsparticles-engine";
 import Particles from "react-particles";
 //import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "tsparticles-slim";
+import { useHistory } from "react-router";
 
 const Banner = () => {
   const [layout, setLayout] = useState({
@@ -23,6 +24,7 @@ const Banner = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const isMobileScreen = useCheckMobileScreen();
+  const history = useHistory();
   const particlesInit = useCallback(async (engine: Engine) => {
     console.log(engine);
 
@@ -91,7 +93,9 @@ const Banner = () => {
             </p>
             <div>
               <div className="max-w-[172px] md:mb-20 mb-5 md:mx-0 mx-auto">
-                <Button>Register</Button>
+                <Button onClick={() => history.push("/register")}>
+                  Register
+                </Button>
               </div>
             </div>
             <div className="font-unica md:max-w-[285px] max-w-[220px] md:mx-0 mx-auto flex items-center justify-between">
