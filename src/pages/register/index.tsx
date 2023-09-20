@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Layout from "../../components/Layout";
 import register from "../../assets/images/register.svg";
 import mobileregister from "../../assets/images/register-mobile.svg";
@@ -15,11 +21,121 @@ import Button from "../../components/Button";
 import Sparkle from "react-sparkle";
 import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
 import Select from "../../components/Select";
+import axios from "axios";
+import { baseUrl } from "../../utils/helpers";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    email: yup.string().email().required("Email is required"),
+    phone: yup.string().required("Phone Number is required"),
+    team_name: yup.string().required("Team Name is required"),
+    group_size: yup.string().required("Group Size is required"),
+    project_topic: yup.string().required("Project Topic is required"),
+    category: yup.string().required("Category is required"),
+  })
+  .required();
 
 const Register = () => {
   const isMobileScreen = useCheckMobileScreen();
   const [checked, setChecked] = useState(false);
-  const [success, setSuccess] = useState(true);
+  const [catLoading, setCatLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
+  const [err, setErr] = useState("");
+  const [catErr, setCatErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const transformedCategories = useMemo(
+    () =>
+      categories.map((c) => ({
+        title: c.name,
+        value: c.name,
+      })),
+    [categories]
+  );
+
+  const loadCategories = useCallback(async () => {
+    try {
+      setCatLoading(true);
+      setCatErr("");
+      const response = await axios.get(`${baseUrl}/hackathon/categories-list`);
+      setCategories(response.data);
+      setCatLoading(false);
+    } catch (error) {
+      console.log(error);
+      setCatLoading(false);
+      setCatErr(
+        "Something went wrong fetching categories. Kindly reload this page to try again"
+      );
+    }
+  }, []);
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    register: reg,
+    reset,
+  } = useForm({
+    defaultValues: {
+      category: "",
+      email: "",
+      group_size: "",
+      phone: "",
+      project_topic: "",
+      team_name: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const submit = useCallback(
+    async (cred: any) => {
+      try {
+        if (!checked) {
+          setErr("Kindly agree to the event terms and conditions to proceed");
+          return;
+        }
+        setLoading(true);
+        setErr("");
+        const selectedCategory = categories.find(
+          (c) => c.name === cred.category
+        );
+        await axios.post(`${baseUrl}/hackathon/registration`, {
+          email: cred.email,
+          phone_number: cred.phone,
+          team_name: cred.team_name,
+          group_size: cred.group_size,
+          project_topic: cred.project_topic,
+          category: selectedCategory?.id || 1,
+          privacy_poclicy_accepted: true,
+        });
+        setSuccess(true);
+        setLoading(false);
+        formRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
+        reset();
+        setChecked(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        setErr("Something went wrong");
+        formRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    },
+    [checked, categories, reset]
+  );
+
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
 
   return (
     <>
@@ -68,7 +184,10 @@ const Register = () => {
             </div>
           )}
           <div className="md:pr-[105px] z-[6683]">
-            <div className="md:bg-white shadow-md md:mb-[115px] md:bg-opacity-[0.03] md:py-[75px] py-[50px] px-12 rounded-xl md:px-[70px] md:w-[620px]">
+            <div
+              ref={formRef}
+              className="md:bg-white shadow-md md:mb-[115px] md:bg-opacity-[0.03] md:py-[75px] py-[50px] px-12 rounded-xl md:px-[70px] md:w-[620px]"
+            >
               <div className="font-clash font-semibold text-accent md:text-[32px] md:mb-9 mb-6">
                 Register
               </div>
@@ -84,6 +203,7 @@ const Register = () => {
               <div className="md:text-2xl md:mb-8 text-xl mb-6 text-center md:text-left">
                 CREATE YOUR ACCOUNT
               </div>
+              {err && <div className="text-sm my-3 text-accent">{err}</div>}
               <div>
                 <div className="grid md:grid-cols-2 gap-x-8 gap-y-0">
                   <Input
@@ -95,6 +215,8 @@ const Register = () => {
                       paddingRight: "20px",
                       fontSize: "14px",
                     }}
+                    error={errors.team_name?.message}
+                    {...reg("team_name")}
                   />
                   <Input
                     placeholder="Enter your phone number"
@@ -105,6 +227,8 @@ const Register = () => {
                       paddingRight: "20px",
                       fontSize: "14px",
                     }}
+                    error={errors.phone?.message}
+                    {...reg("phone")}
                   />
                   <Input
                     placeholder="Enter your email address"
@@ -115,6 +239,8 @@ const Register = () => {
                       paddingRight: "20px",
                       fontSize: "14px",
                     }}
+                    error={errors.email?.message}
+                    {...reg("email")}
                   />
                   <Input
                     placeholder="What is your group project topic"
@@ -125,6 +251,8 @@ const Register = () => {
                       paddingRight: "20px",
                       fontSize: "14px",
                     }}
+                    error={errors.project_topic?.message}
+                    {...reg("project_topic")}
                   />
                 </div>
                 <div className="grid md:grid-cols-2 grid-cols-[2fr_1fr] gap-x-8 gap-y-0">
@@ -136,11 +264,14 @@ const Register = () => {
                       marginRight: "20px",
                       fontSize: "14px",
                     }}
-                    title="Select your category"
-                    data={[
-                      { title: "title one", value: "title one" },
-                      { title: "title two", value: "title two" },
-                    ]}
+                    title={
+                      catLoading
+                        ? "Loading categories..."
+                        : "Select your category"
+                    }
+                    data={transformedCategories}
+                    error={catErr || errors.category?.message}
+                    {...reg("category")}
                   />
                   <Select
                     className="placeholder:opacity-25 text-sm !md:px-6"
@@ -158,7 +289,13 @@ const Register = () => {
                       { title: "4", value: "4" },
                       { title: "5", value: "5" },
                       { title: "6", value: "6" },
+                      { title: "7", value: "7" },
+                      { title: "8", value: "8" },
+                      { title: "9", value: "9" },
+                      { title: "10", value: "10" },
                     ]}
+                    error={errors.group_size?.message}
+                    {...reg("group_size")}
                   />
                 </div>
                 <div>
@@ -183,7 +320,7 @@ const Register = () => {
                 </div>
                 <div className="flex justify-center items-center">
                   <div className="md:w-full w-[172px]">
-                    <Button onClick={() => setSuccess(true)}>
+                    <Button onClick={handleSubmit(submit)} loading={loading}>
                       Register Now
                     </Button>
                   </div>

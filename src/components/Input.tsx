@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   containerClass?: string;
@@ -7,19 +7,21 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-const Input = ({
-  containerClass,
-  error,
-  label,
-  labelClass,
-  className,
-  style,
-  ...rest
-}: Props) => {
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const {
+    containerClass,
+    error,
+    label,
+    labelClass,
+    className,
+    style,
+    ...rest
+  } = props;
   return (
     <div className={`md:mb-10 mb-6 ${containerClass}`}>
       {label && <p className={`text-sm mb-3 ${labelClass}`}>{label}</p>}
       <input
+        ref={ref}
         type="text"
         style={{
           ...style,
@@ -30,6 +32,6 @@ const Input = ({
       {error && <p className="text-xs mt-1 text-accent">{error}</p>}
     </div>
   );
-};
+});
 
 export default Input;

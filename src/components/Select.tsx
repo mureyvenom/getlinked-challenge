@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes } from "react";
+import { forwardRef, SelectHTMLAttributes } from "react";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   containerClass?: string;
@@ -9,17 +9,19 @@ interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   title?: string;
 }
 
-const Select = ({
-  containerClass,
-  error,
-  label,
-  labelClass,
-  className,
-  style,
-  title,
-  data,
-  ...rest
-}: Props) => {
+const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
+  const {
+    containerClass,
+    error,
+    label,
+    labelClass,
+    className,
+    style,
+    title,
+    data,
+    ...rest
+  } = props;
+
   return (
     <div className={`md:mb-10 mb-6 ${containerClass}`}>
       {label && <p className={`text-sm mb-3 ${labelClass}`}>{label}</p>}
@@ -30,6 +32,7 @@ const Select = ({
         }}
       >
         <select
+          ref={ref}
           className={`h-full w-full outline-none bg-transparent`}
           {...rest}
         >
@@ -44,6 +47,6 @@ const Select = ({
       {error && <p className="text-xs mt-1 text-accent">{error}</p>}
     </div>
   );
-};
+});
 
 export default Select;

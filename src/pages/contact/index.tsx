@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Layout from "../../components/Layout";
 import instagram from "../../assets/images/instagram.svg";
 import twitter from "../../assets/images/twitter.svg";
@@ -15,9 +15,71 @@ import TextArea from "../../components/TextArea";
 import Button from "../../components/Button";
 import Sparkle from "react-sparkle";
 import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import axios from "axios";
+import { baseUrl } from "../../utils/helpers";
+
+const schema = yup
+  .object({
+    email: yup.string().email().required("Email is required"),
+    phone: yup.string().required("Phone Number is required"),
+    first_name: yup.string().required("Name is required"),
+    message: yup.string().required("Message is required"),
+  })
+  .required();
 
 const Contact = () => {
   const isMobileScreen = useCheckMobileScreen();
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      first_name: "",
+      message: "",
+      phone: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const submit = useCallback(
+    async (cred: any) => {
+      try {
+        setLoading(true);
+        setComplete(false);
+        const response = await axios.post(
+          `${baseUrl}/hackathon/contact-form`,
+          cred
+        );
+        console.log("response", response);
+        formRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
+        setLoading(false);
+        setComplete(true);
+        reset();
+      } catch (error) {
+        console.log(error);
+        setErr("Something went wrong");
+        setLoading(false);
+        setComplete(false);
+        formRef.current?.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    },
+    [reset]
+  );
 
   return (
     <Layout>
@@ -89,22 +151,52 @@ const Contact = () => {
           </div>
         )}
         <div className="md:pr-[208px] z-[9876545678]">
-          <div className="md:bg-white shadow-md md:mb-[115px] md:bg-opacity-[0.03] md:py-[75px] py-[50px] px-12 rounded-xl md:px-[90px] md:w-[620px]">
+          <div
+            ref={formRef}
+            className="md:bg-white shadow-md md:mb-[115px] md:bg-opacity-[0.03] md:py-[75px] py-[50px] px-12 rounded-xl md:px-[90px] md:w-[620px]"
+          >
             <div className="font-clash font-semibold text-accent text-xl md:mb-9 mb-6">
               Questions or need assistance? <br /> Let us know about it!
             </div>
+            {complete && (
+              <div className="text-sm my-3">
+                Your contact message has been submitted
+              </div>
+            )}
+            {err && <div className="text-sm my-3 text-accent">{err}</div>}
             {isMobileScreen && (
               <div className="mb-7 text-xs">
                 Email us below to any question related to our event
               </div>
             )}
             <div>
-              <Input placeholder="First Name" />
-              <Input placeholder="Mail" />
-              <TextArea placeholder="Message" />
+              <Input
+                placeholder="First Name"
+                {...register("first_name")}
+                error={errors?.first_name?.message}
+              />
+              <Input
+                placeholder="Email"
+                {...register("email")}
+                type="email"
+                error={errors?.email?.message}
+              />
+              <Input
+                placeholder="Phone"
+                {...register("phone")}
+                type="tel"
+                error={errors?.phone?.message}
+              />
+              <TextArea
+                placeholder="Message"
+                {...register("message")}
+                error={errors?.message?.message}
+              />
               <div className="flex justify-center items-center">
                 <div className="w-[172px]">
-                  <Button>Submit</Button>
+                  <Button onClick={handleSubmit(submit)} loading={loading}>
+                    Submit
+                  </Button>
                 </div>
               </div>
               {isMobileScreen && (

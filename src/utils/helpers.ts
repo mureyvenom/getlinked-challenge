@@ -83,3 +83,5 @@ export const timelinedata = [
     date: "November 18, 2023",
   },
 ];
+
+export const baseUrl = "https://backend.getlinked.ai";
