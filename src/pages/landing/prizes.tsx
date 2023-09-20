@@ -2,12 +2,14 @@ import React from "react";
 import starsecondary from "../../assets/images/star-secondary.svg";
 import star from "../../assets/images/star.svg";
 import prizesbg from "../../assets/images/prizes-bg.png";
+import mobileprizesbg from "../../assets/images/mobile-prizes-bg.png";
 import prizes from "../../assets/images/prizes.svg";
 import rewards from "../../assets/images/rewards.svg";
 import flare1 from "../../assets/images/prizes-flare-1.png";
 import flare2 from "../../assets/images/prizes-flare-2.png";
 import Sparkle from "react-sparkle";
 import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const Prizes = () => {
   const isMobileScreen = useCheckMobileScreen();
@@ -42,11 +44,13 @@ const Prizes = () => {
           alt=""
           className="absolute md:left-[320px] md:w-[15px] bottom-[40%] left-[78%] w-[10px]"
         />
-        <img
-          src={prizesbg}
-          alt=""
-          className="absolute h-full w-full opacity-30 blur-lg"
-        />
+        {!isMobileScreen && (
+          <img
+            src={isMobileScreen ? mobileprizesbg : prizesbg}
+            alt=""
+            className="absolute h-full w-full opacity-30 blur-lg"
+          />
+        )}
         <Sparkle overflowPx={0} count={48} maxSize={3} flicker={false} />
         <img
           src={flare1}
@@ -56,7 +60,7 @@ const Prizes = () => {
         <img
           src={flare2}
           alt="flare 2"
-          className="absolute right-0 bottom-0 md:-mr-[10%] md:-mb-[20%] opacity-50 -mb-[74%] -mr-[29%] blur-lg"
+          className="absolute right-0 bottom-0 md:-mr-[10%] md:-mb-[20%] opacity-50 -mb-[74%] -mr-[39%] blur-lg"
         />
         {isMobileScreen && (
           <div className="md:pl-36 pt-20 mb-10">
@@ -85,7 +89,9 @@ const Prizes = () => {
             </div>
           )}
           <div>
-            <img src={rewards} alt="rewards" />
+            <AnimationOnScroll animateIn="animate__zoomIn" duration={0.7}>
+              <img src={rewards} alt="rewards" />
+            </AnimationOnScroll>
           </div>
         </div>
       </div>

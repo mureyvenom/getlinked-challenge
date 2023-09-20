@@ -7,9 +7,13 @@ import innovation from "../../assets/images/innovation-banner.png";
 import mobileinnovation from "../../assets/images/mobile-innovation-banner.png";
 import Button from "../../components/Button";
 import Typewriter from "typewriter-effect";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
 import Sparkle from "react-sparkle";
+import type { Container, Engine } from "tsparticles-engine";
+import Particles from "react-particles";
+//import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
+import { loadSlim } from "tsparticles-slim";
 
 const Banner = () => {
   const [layout, setLayout] = useState({
@@ -19,6 +23,22 @@ const Banner = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const isMobileScreen = useCheckMobileScreen();
+  const particlesInit = useCallback(async (engine: Engine) => {
+    console.log(engine);
+
+    // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
+    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+    // starting from v2 you can add only the features you need reducing the bundle size
+    //await loadFull(engine);
+    await loadSlim(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(
+    async (container: Container | undefined) => {
+      await console.log(container);
+    },
+    []
+  );
 
   return (
     <div className="relative">
@@ -90,6 +110,64 @@ const Banner = () => {
             className="md:absolute md:right-0 md:-mt-[280px]"
             ref={containerRef}
           >
+            <div className="md:w-[400px] md:h-[400px] w-[230px] h-[230px] right-12 bottom-[100px] overflow-hidden md:bottom-[230px] md:right-[160px] absolute">
+              <Particles
+                id="tsparticles"
+                init={particlesInit}
+                loaded={particlesLoaded}
+                className="h-full"
+                options={{
+                  fullScreen: false,
+                  background: {
+                    color: {
+                      value: "transparent",
+                    },
+                  },
+                  fpsLimit: 120,
+                  particles: {
+                    color: {
+                      value: "#ffffff",
+                    },
+                    links: {
+                      color: "#ffffff",
+                      distance: 150,
+                      enable: true,
+                      opacity: 0.5,
+                      width: 1,
+                    },
+                    move: {
+                      direction: "none",
+                      enable: true,
+                      outModes: {
+                        default: "bounce",
+                      },
+                      random: false,
+                      speed: 6,
+                      straight: false,
+                    },
+                    number: {
+                      density: {
+                        enable: true,
+                        area: 800,
+                      },
+                      value: 80,
+                    },
+                    opacity: {
+                      value: 0.5,
+                    },
+                    shape: {
+                      type: "circle",
+                    },
+                    size: {
+                      value: { min: 1, max: 5 },
+                    },
+                  },
+                  detectRetina: true,
+                  smooth: true,
+                  zLayers: 4,
+                }}
+              />
+            </div>
             <img
               onLoad={() => {
                 setLayout({

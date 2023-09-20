@@ -4,11 +4,13 @@ import Accordion from "../../components/Accordion";
 import { accordiondata } from "../../utils/helpers";
 import faq from "../../assets/images/faq.svg";
 import star from "../../assets/images/star.svg";
+import { forwardRef } from "react";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
-const Faqs = () => {
+const Faqs = forwardRef<HTMLDivElement, any>((_, ref) => {
   return (
     <>
-      <div className="flex flex-col md:flex-row md:px-0 px-12">
+      <div ref={ref} className="flex flex-col md:flex-row md:px-0 px-12">
         <div className="md:pt-28 md:pl-[183px] pt-12">
           <div className="flex">
             <div className="relative">
@@ -35,20 +37,22 @@ const Faqs = () => {
           </div>
         </div>
         <div className="md:pr-[101px] md:pl-8 md:pt-8 md: pb-10">
-          <div className="md:max-h-[820px] max-h-[340px] overflow-hidden relative">
-            <img src={faq} alt="FAQ" className="w-full" />
-            <Sparkle overflowPx={0} count={40} maxSize={3} flicker={false} />
-            <img
-              src={star}
-              alt="star"
-              className="absolute bottom-0 right-0 md:mr-64 md:w-auto w-[16px] mr-20"
-            />
-          </div>
+          <AnimationOnScroll animateIn="animate__zoomIn">
+            <div className="md:max-h-[820px] max-h-[340px] overflow-hidden relative">
+              <img src={faq} alt="FAQ" className="w-full" />
+              <Sparkle overflowPx={0} count={40} maxSize={3} flicker={false} />
+              <img
+                src={star}
+                alt="star"
+                className="absolute bottom-0 right-0 md:mr-64 md:w-auto w-[16px] mr-20"
+              />
+            </div>
+          </AnimationOnScroll>
         </div>
       </div>
       <div className="border-b-[1px] opacity-[0.18]"></div>
     </>
   );
-};
+});
 
 export default Faqs;

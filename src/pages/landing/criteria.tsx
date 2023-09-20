@@ -7,6 +7,7 @@ import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
 import Button from "../../components/Button";
 import flare1 from "../../assets/images/criteria-flare-1.png";
 import flare2 from "../../assets/images/criteria-flare-2.png";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const criterias = [
   {
@@ -59,10 +60,13 @@ const Criteria = () => {
                 <Sparkle overflowPx={0} count={7} maxSize={3} flicker={false} />
               </div>
             </div>
-            <img
-              src={isMobileScreen ? mobilecriteria : criteria}
-              alt="Criteria"
-            />
+
+            <AnimationOnScroll animateIn="animate__fadeIn" duration={0.7}>
+              <img
+                src={isMobileScreen ? mobilecriteria : criteria}
+                alt="Criteria"
+              />
+            </AnimationOnScroll>
             <div className="absolute bottom-0 right-0 md:mr-0 mr-[40%] md:mb-0 mb-[34%]">
               <img
                 src={star}

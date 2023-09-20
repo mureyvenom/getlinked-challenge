@@ -1,10 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { timelinedata } from "../../utils/helpers";
 import TimelineComponent from "../../components/Timeline";
 
-const Timeline = () => {
+const Timeline = forwardRef<HTMLDivElement, any>((_, ref) => {
   return (
-    <div className="md:px-0 px-12">
+    <div className="md:px-0 px-12" ref={ref}>
       <div className="flex justify-center items-center md:mb-24 md:mt-16 mt-20 mb-14">
         <div>
           <h3 className="font-clash font-bold md:text-[32px] mb-3 text-center text-xl">
@@ -21,6 +21,6 @@ const Timeline = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Timeline;

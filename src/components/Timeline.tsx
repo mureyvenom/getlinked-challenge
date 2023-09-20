@@ -2,6 +2,7 @@ import starsecondary from "../assets/images/star-secondary.svg";
 import star from "../assets/images/star.svg";
 import Sparkle from "react-sparkle";
 import useCheckMobileScreen from "../hooks/useCheckMobileScreen";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 interface Props {
   data: { title: string; summary: string; number: string; date: string }[];
@@ -29,12 +30,18 @@ const Timeline = ({ data }: Props) => {
         <div key={`timeline-${d.title}`}>
           <div className="flex md:flex-col flex-row">
             <div className="flex items-center justify-center">
-              <div
-                className="bg-accent w-1 mb-3"
-                style={{
-                  height: isMobileScreen ? "100%" : i === 0 ? "137px" : "86px",
-                }}
-              ></div>
+              <AnimationOnScroll animateIn="animate__fadeInUp" duration={0.7}>
+                <div
+                  className="bg-accent w-1 mb-3"
+                  style={{
+                    height: isMobileScreen
+                      ? "100%"
+                      : i === 0
+                      ? "137px"
+                      : "86px",
+                  }}
+                ></div>
+              </AnimationOnScroll>
             </div>
             <div className="flex flex-1 md:flex-row flex-col md:ml-0 ml-3 items-center justify-center mb-3">
               <div
@@ -50,21 +57,41 @@ const Timeline = ({ data }: Props) => {
                   <div
                     className={`md:text-2xl text-xs mb-3 font-bold text-accent`}
                   >
-                    {d.title}
+                    <AnimationOnScroll
+                      animateIn="animate__fadeInUp"
+                      duration={0.7}
+                    >
+                      {d.title}
+                    </AnimationOnScroll>
                   </div>
-                  <div className="text-xs">{d.summary}</div>
+                  <AnimationOnScroll
+                    animateIn="animate__fadeInUp"
+                    duration={0.7}
+                  >
+                    <div className="text-xs">{d.summary}</div>
+                  </AnimationOnScroll>
                 </div>
                 {!isMobileScreen && (
                   <>
                     <div className="h-[53px] w-[53px] rounded-full bg-gradient-to-r from-accent to-secondary flex justify-center items-center text-2xl font-bold md:mx-[86px]">
-                      {d.number}
+                      <AnimationOnScroll
+                        animateIn="animate__fadeInUp"
+                        duration={0.7}
+                      >
+                        {d.number}
+                      </AnimationOnScroll>
                     </div>
                     <div
                       className={`md:text-2xl text-left text-xs flex-1 font-bold md:w-auto w-full text-accent ${
                         i % 2 === 0 ? "md:text-left" : "md:text-right"
                       }`}
                     >
-                      {d.date}
+                      <AnimationOnScroll
+                        animateIn="animate__fadeInUp"
+                        duration={0.7}
+                      >
+                        {d.date}
+                      </AnimationOnScroll>
                     </div>
                   </>
                 )}
@@ -74,14 +101,18 @@ const Timeline = ({ data }: Props) => {
           {isMobileScreen && (
             <div className="flex gap-x-2 items-center -ml-2 mb-7">
               <div className="h-[20px] w-[20px] rounded-full bg-gradient-to-r from-accent to-secondary flex justify-center items-center text-xs font-bold">
-                {d.number}
+                <AnimationOnScroll animateIn="animate__fadeInUp" duration={0.7}>
+                  {d.number}
+                </AnimationOnScroll>
               </div>
               <div
                 className={`md:text-2xl text-left text-xs flex-1 font-bold md:w-auto w-full text-accent ${
                   i % 2 === 0 ? "md:text-left" : "md:text-right"
                 }`}
               >
-                {d.date}
+                <AnimationOnScroll animateIn="animate__fadeInUp" duration={0.7}>
+                  {d.date}
+                </AnimationOnScroll>
               </div>
             </div>
           )}

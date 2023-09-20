@@ -3,6 +3,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Route, Switch } from "react-router";
 import NotFound from "./components/404";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Contact from "./pages/contact";
 import Landing from "./pages/landing";
 
 const routes = [
@@ -10,6 +11,26 @@ const routes = [
     path: "/",
     exact: true,
     component: Landing,
+  },
+  {
+    path: "/timeline",
+    exact: true,
+    component: Landing,
+  },
+  {
+    path: "/faqs",
+    exact: true,
+    component: Landing,
+  },
+  {
+    path: "/overview",
+    exact: true,
+    component: Landing,
+  },
+  {
+    path: "/contact",
+    exact: true,
+    component: Contact,
   },
 ];
 

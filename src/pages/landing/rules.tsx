@@ -3,6 +3,7 @@ import star from "../../assets/images/star.svg";
 import lensflare from "../../assets/images/flare.png";
 import rulesflare from "../../assets/images/rules-flare.png";
 import Sparkle from "react-sparkle";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 
 const Rules = () => {
   return (
@@ -44,7 +45,9 @@ const Rules = () => {
           </div>
         </div>
         <div className="z-[4567897654]">
-          <img src={rules} alt="Rules" />
+          <AnimationOnScroll animateIn="animate__fadeIn" duration={0.7}>
+            <img src={rules} alt="Rules" />
+          </AnimationOnScroll>
         </div>
       </div>
       <div className="border-b-[1px] opacity-[0.18]"></div>

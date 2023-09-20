@@ -6,14 +6,16 @@ import mobiletitle from "../../assets/images/mobile-big-idea-title.svg";
 import floatingarrow from "../../assets/images/floating-arrow-big-title.svg";
 import useCheckMobileScreen from "../../hooks/useCheckMobileScreen";
 import Sparkle from "react-sparkle";
+import { forwardRef } from "react";
 
-const BigIdea = () => {
+const BigIdea = forwardRef<HTMLDivElement, any>((_, ref) => {
   const isMobileScreen = useCheckMobileScreen();
 
   return (
     <>
       <div className="border-t-[1px] opacity-[0.18]"></div>
       <div
+        ref={ref}
         className={`flex relative md:flex-row flex-col md:gap-y-0 gap-y-14 md:gap-x-[109px] bg-bg py-16 md:pl-[190px] md:pr-40 px-[70px] items-center`}
       >
         <div className="flex flex-1 items-start">
@@ -61,6 +63,6 @@ const BigIdea = () => {
       <div className="border-b-[1px] opacity-[0.18]"></div>
     </>
   );
-};
+});
 
 export default BigIdea;
