@@ -30,7 +30,13 @@ const Timeline = ({ data }: Props) => {
         <div key={`timeline-${d.title}`}>
           <div className="flex md:flex-col flex-row">
             <div className="flex items-center justify-center">
-              <AnimationOnScroll animateIn="animate__fadeInUp" duration={0.7}>
+              <AnimationOnScroll
+                animateIn="animate__fadeInUp"
+                duration={0.7}
+                style={{
+                  height: isMobileScreen ? "90%" : undefined,
+                }}
+              >
                 <div
                   className="bg-accent w-1 mb-3"
                   style={{
